@@ -77,7 +77,7 @@ function GetInvocation() {
 # Create list of filesystems to (un)freeze
 ############################################
 function FsSpec() {
-   local FSTYP=$(stat -c %F ${1} 2> /dev/null)
+   local FSTYP=$(stat -c %F "${1}" 2> /dev/null)
    local IDX=${#FSLIST[@]}
 
    case ${FSTYP} in
@@ -123,7 +123,7 @@ function FSfreezeToggle() {
       while [ ${IDX} -lt ${#FSLIST[@]} ]
       do
          MultiLog "Attempting to ${ACTION} '${FSLIST[${IDX}]}'"
-	 fsfreeze ${FRZFLAG} ${FSLIST[${IDX}]}
+	 fsfreeze ${FRZFLAG} "${FSLIST[${IDX}]}"
 	 if [ $? -ne 0 ]
 	 then
 	    MultiLog "${ACTION} on ${FSLIST[${IDX}]} exited abnormally" >&2
@@ -183,7 +183,7 @@ do
 	       exit 1
 	       ;;
 	    *) 
-               FsSpec ${2}
+               FsSpec "${2}"
                shift 2;
 	       ;;
 	 esac
@@ -223,7 +223,7 @@ do
 done
 
 
-if [ "${VOLIDS[@]}" = "" ]
+if [[ "${VOLIDS[@]}" = "" ]]
 then
    MultiLog "No volumes found in the requested consistency-group [${CONGRP}]" >&2
 fi
